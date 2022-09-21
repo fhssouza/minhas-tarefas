@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.NamedQuery;
 
@@ -24,12 +27,15 @@ public class Tarefa {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@NotBlank(message = "Campo descrição não pode está vazio")
+	@Size(min = 5, max = 150, message = "Campo descrição deve ter entre 5 e 150 caracteres")
 	@Column(name = "ds_tarefa", nullable = false, length = 150)
 	private String descricao;
 
 	@Enumerated(EnumType.STRING)
 	private TarefaStatus status;
 
+	@FutureOrPresent(message = "Campo Data de Entrega deve ser uma data futura")
 	private LocalDate dataEntrega;
 
 	private boolean visivel;
